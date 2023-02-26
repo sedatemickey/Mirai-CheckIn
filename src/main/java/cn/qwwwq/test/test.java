@@ -1,9 +1,10 @@
-package test;
+package cn.qwwwq.test;
 import javafx.util.Pair;
 import java.io.*;
+
 class CheckIn{
     private Pair<Integer,Long> GetInfo(long QQid){
-        //-1:找不到该QQid  -2:找不到数据文件  -3:子程序未正常执行出口
+        //-1:找不到该QQid  -2:找不到数据文件
         //< coins, date >
         try {
             //读取文件
@@ -11,7 +12,7 @@ class CheckIn{
             String readStr; //记录正在读取的行
             String gottenStr = null; //记录QQid所属的行, 找不到则为null
             while((readStr = reader.readLine()) != null){
-                if(readStr.equals("["+Long.toString(QQid)+"]")){ //如果找到QQid所属的行, 就存到getStr中, 然后break
+                if(readStr.equals("["+QQid+"]")){ //如果找到QQid所属的行, 就存到getStr中, 然后break
                     gottenStr=readStr;
                     break;
                 }
@@ -21,28 +22,30 @@ class CheckIn{
                 }
             }
             //判断QQid是否存在
-            if(gottenStr == null)return new Pair<Integer,Long>(-1,-1L); //找不到QQid, 返回状态码-1
+            if(gottenStr == null)return new Pair<>(-1,-1L); //找不到QQid, 返回状态码-1
             //QQid存在, 开始读取coins和date
             //读coins
             gottenStr=reader.readLine();
-
+            int coins = Integer.parseInt(gottenStr.substring(6));
             //读date
-
+            gottenStr=reader.readLine();
+            Long date = Long.valueOf(gottenStr.substring(5));
+            return new Pair<>(coins,date);
         }catch(IOException e){//找不到数据文件, 返回状态码-2
             System.out.println("-Catch-");
-            return new Pair<Integer,Long>(-1,-2L);
+            return new Pair<>(-1,-2L);
         }
-        return new Pair<Integer,Long>(-1,0L); //不知为何执行到了这句, 返回错误码-3
     }
     public void main(long QQid){
         Pair<Integer,Long> info = GetInfo(QQid);
-
+        System.out.println(info.getKey());
+        System.out.println(info.getValue());
     }
 }
 
 public class test {
     public static void main(String[] args) {
         CheckIn checkIn = new CheckIn();
-        checkIn.main(877818351L);
+        checkIn.main(2941904954L);
     }
 }
