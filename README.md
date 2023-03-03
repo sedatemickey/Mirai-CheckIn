@@ -1,5 +1,5 @@
 # Mirai-CheckIn
-一个为mirai-console设计的签到插件
+一个为 [mirai-console](https://github.com/mamoe/mirai) 设计的签到插件
 
 每个QQ每天可以签到一次
 
