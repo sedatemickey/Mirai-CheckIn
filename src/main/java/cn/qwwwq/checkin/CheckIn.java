@@ -20,7 +20,7 @@ import java.util.Random;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
 
 class MCheckIn{
-    final String dataPath = "H:\\coins.ini";
+    final String dataPath = "./data/coins.ini";
     private Pair<Integer,Long> GetInfo(long QQid){
         //-1:找不到该QQid  -2:找不到数据文件  -3:新建数据文件时错误
         //< coins, date >
@@ -55,6 +55,7 @@ class MCheckIn{
             return new Pair<>(coins,date);
         }catch(IOException e){//找不到数据文件, 新建数据文件, 并返回状态码-2
             //System.out.println("寄");
+
             File writer = new File(dataPath);
             try{
                 if(!writer.createNewFile()){
@@ -128,7 +129,7 @@ class MCheckIn{
         long date = info.getValue();
         //boolean isNew = false; //记录该用户是否为未出现过的用户
         if(coins == -1){ //异常状态处理
-            if(date == -1){
+            if(date == -1 || date == -2){
                 //isNew = true; //该用户从来没签过到
                 coins = 0;
                 date = 0;
